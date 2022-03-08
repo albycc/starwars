@@ -10,4 +10,14 @@ body {
   border: 2px solid #d3c229;
   min-height: 100px; }
 
+.character-box {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #d3c229; }
+  .character-box img {
+    width: 150px; }
+
+.text-box {
+  border: 1px solid #d3c229; }
+
 /*# sourceMappingURL=style.css.map */
