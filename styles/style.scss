@@ -1,0 +1,32 @@
+$yellow-tint:rgb(211, 194, 41);
+$cyan-tint: rgb(41, 211, 211);
+$light-grey-tint:rgb(173, 173, 173);
+
+body{
+    background-color: rgb(23, 23, 43);
+}
+
+.flex-row{
+    display: flex;
+}
+
+.character-select-container{
+    width:200px;
+    color:$yellow-tint;
+    border: 2px solid $yellow-tint;
+    min-height: 100px;
+}
+
+.character-box{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid $yellow-tint;
+
+    img{
+        width:150px;
+    }
+}
+
+.text-box{
+    border: 1px solid $yellow-tint;
+}

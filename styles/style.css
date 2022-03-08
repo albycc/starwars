@@ -1,3 +1,23 @@
-body{
-    background-color: rgb(23, 23, 43);
-}
+body {
+  background-color: #17172b; }
+
+.flex-row {
+  display: flex; }
+
+.character-select-container {
+  width: 200px;
+  color: #d3c229;
+  border: 2px solid #d3c229;
+  min-height: 100px; }
+
+.character-box {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #d3c229; }
+  .character-box img {
+    width: 150px; }
+
+.text-box {
+  border: 1px solid #d3c229; }
+
+/*# sourceMappingURL=style.css.map */
