@@ -10,6 +10,11 @@ body{
     display: flex;
 }
 
+.flex-column{
+    display:flex;
+    flex-direction: column;
+}
+
 .character-select-container{
     width:200px;
     color:$yellow-tint;
@@ -24,10 +29,12 @@ body{
 
     img{
         height:400px;
+        width:150px;
     }
 }
 
 .text-box{
     border: 1px solid $yellow-tint;
+    height:100px;
 }
 

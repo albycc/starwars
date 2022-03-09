@@ -4,6 +4,10 @@ body {
 .flex-row {
   display: flex; }
 
+.flex-column {
+  display: flex;
+  flex-direction: column; }
+
 .character-select-container {
   width: 200px;
   color: #d3c229;
@@ -15,9 +19,11 @@ body {
   flex-direction: column;
   border: 2px solid #d3c229; }
   .character-box img {
-    height: 400px; }
+    height: 400px;
+    width: 150px; }
 
 .text-box {
-  border: 1px solid #d3c229; }
+  border: 1px solid #d3c229;
+  height: 100px; }
 
 /*# sourceMappingURL=style.css.map */
