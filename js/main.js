@@ -10,6 +10,31 @@ let char2;
 
 const apiURL = "https://swapi.dev/api/people";
 
+const characterList = [
+    "Luke Skywalker",
+    "C-3PO",
+    "R2-D2",
+    "Darth Vader",
+    "Leia Organa",
+    "Owen Lars",
+    "Beru Whitesun lars",
+    "R5-D4",
+    "Biggs Darklighter",
+    "Obi-Wan Kenobi"
+];
+function populateDropdown(dropdown, item){
+    const option = document.createElement("option");
+    option.value = option.textContent = item;
+    dropdown.add(option);
+}
+
+(function(){
+    characterList.forEach(char =>{
+        populateDropdown(charOneDropdown, char);
+        populateDropdown(charTwoDropdown, char);
+    })
+})();
+
 async function fetchData(url){
     const response = await fetch(url);
     const json = await response.json();
@@ -24,13 +49,7 @@ async function getCharacterNames(){
     })
 }
 
-function populateDropdown(dropdown, item){
-    const option = document.createElement("option");
-    option.value = option.textContent = item.name;
-    dropdown.add(option);
-}
-
-getCharacterNames();
+// getCharacterNames();
 
 document.getElementById("fetch-characters").addEventListener("click", async ()=>{
     const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".jpg";
@@ -53,6 +72,14 @@ document.getElementById("fetch-characters").addEventListener("click", async ()=>
                 </div>
 
             </div>
+            <div class="character-box">
+                <img src="../img/${char2.pictureUrl}">
+                <h2>${char2.name}</h2>
+                <div class="text-box" id="text-box">
+
+                </div>
+
+            </div>
 
         </div>
         <div class="flex-row">
@@ -64,15 +91,15 @@ document.getElementById("fetch-characters").addEventListener("click", async ()=>
         const name1 = char1.name;
         const name2 = char2.name;
 
-        const weightDiff = char2.mass - char1.mass
-        const weightMsg = weightDiff > 0 ? 
-            `${name2} weights ${weightDiff} more than ${name1}` :
-            `${name2} weights ${weightDiff} less than ${name1}`;
+        const weightDiff = char2.weightCompare(char1);
+        const weightMsg = char2.weightsMore(char1) ? 
+            `${name2} weights ${weightDiff} kilograms more than ${name1}` :
+            `${name2} weights ${weightDiff} kilograms less than ${name1}`;
 
-        const heightDiff = char2.height - char1.height;
-        const heightMsg = heightDiff > 0 ?
-            `${name2} is ${heightDiff} taller than ${name1}` :
-            `${name2} is ${heightDiff} shorter than ${name1}`;
+        const heightDiff = char2.heightCompare(char1);
+        const heightMsg = char2.tallerThan(char1) ?
+            `${name2} is ${heightDiff} centimeters taller than ${name1}` :
+            `${name2} is ${heightDiff} centimeters shorter than ${name1}`;
 
 
         const hairMsg = char2.hairColor === char1.hairColor ? 

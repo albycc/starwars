@@ -15,7 +15,7 @@ body {
   flex-direction: column;
   border: 2px solid #d3c229; }
   .character-box img {
-    width: 150px; }
+    height: 400px; }
 
 .text-box {
   border: 1px solid #d3c229; }
