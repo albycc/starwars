@@ -1,4 +1,5 @@
 body {
+  color: #14F4FE;
   background-color: #17172b; }
 
 .flex-row {
@@ -19,8 +20,7 @@ body {
   flex-direction: column;
   border: 2px solid #d3c229; }
   .character-box img {
-    height: 400px;
-    width: 150px; }
+    height: 300px; }
 
 .text-box {
   border: 1px solid #d3c229;

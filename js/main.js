@@ -69,32 +69,67 @@ document.getElementById("fetch-characters").addEventListener("click", async ()=>
         const characterContainer = document.createElement("div");
         characterContainer.className = "character-box";
         characterContainer.innerHTML += `
-            <img src="../img/${character.pictureUrl}">
-            <h2>${character.name}</h2>
-            <div class="text-box">
-            
+            <div>
+                <img src="../img/${character.pictureUrl}">
+                <h2>${character.name}</h2>
             </div>
-            <h3>Ask about ${otherChar.name}'s</h3>
         `;
+
+        //  Textbox
+        const textBox = document.createElement("div");
+        textBox.className = "text-box";
+
+        const messageText = document.createElement("span");
+        textBox.appendChild(messageText);
+
+        characterContainer.appendChild(textBox);
+
+        //  Questions group
         const buttonGroup = document.createElement("div");
         buttonGroup.className = "flex-column";
+
+        const questionsHeader = document.createElement("h2");
+        questionsHeader.textContent = `Ask about ${otherChar.name}`
 
         const buttonAskWeight = document.createElement("input");
         buttonAskWeight.setAttribute("type", "button");
         buttonAskWeight.setAttribute("value", "Weight");
+        buttonAskWeight.addEventListener("click", ()=>{
+            const weightDiff = character.weightCompare(otherChar);
+            messageText.textContent = character.weightsMore(otherChar) ?
+                `I weight ${weightDiff} kg more than ${otherChar.name}.` :
+                `I weight ${weightDiff} kg less than ${otherChar.name}.`
+        });
 
         const buttonAskHeight = document.createElement("input");
         buttonAskHeight.setAttribute("type", "button");
         buttonAskHeight.setAttribute("value", "Height");
+        buttonAskHeight.addEventListener("click", ()=>{
+            const heightDiff = character.heightCompare(otherChar);
+            messageText.textContent = character.tallerThan(otherChar) ?
+                `I am ${heightDiff} cm taller than ${otherChar.name}.` :
+                `I am ${heightDiff} cm shorter than ${otherChar.name}.`;
+        });
 
         const buttonAskHairColor = document.createElement("input");
         buttonAskHairColor.setAttribute("type", "button");
         buttonAskHairColor.setAttribute("value", "Hair Color");
+        buttonAskHairColor.addEventListener("click", ()=>{
+            messageText.textContent = character.isSameHairColor(otherChar) ?
+                `I share the same hair color as ${otherChar.name}.` :
+                `we do not have the same hair color.`;
+        })
         
         const buttonAskGender = document.createElement("input");
         buttonAskGender.setAttribute("type", "button");
         buttonAskGender.setAttribute("value", "Gender");
+        buttonAskGender.addEventListener("click", ()=>{
+            messageText.textContent = character.isSameGender(otherChar) ?
+                `We are both ${character.gender}.` :
+                `We do not share gender.`
+        })
 
+        buttonGroup.appendChild(questionsHeader);
         buttonGroup.appendChild(buttonAskWeight);
         buttonGroup.appendChild(buttonAskHeight);
         buttonGroup.appendChild(buttonAskHairColor);
@@ -106,37 +141,6 @@ document.getElementById("fetch-characters").addEventListener("click", async ()=>
     charactersRow.appendChild(characterContainer(char1, char2));
     charactersRow.appendChild(characterContainer(char2, char1));
     selectedCharacterContainer.appendChild(charactersRow);
-
-    // document.getElementById("tell-me-btn").addEventListener("click", ()=>{
-    //     const name1 = char1.name;
-    //     const name2 = char2.name;
-
-    //     const weightDiff = char2.weightCompare(char1);
-    //     const weightMsg = char2.weightsMore(char1) ? 
-    //         `${name2} weights ${weightDiff} kilograms more than ${name1}` :
-    //         `${name2} weights ${weightDiff} kilograms less than ${name1}`;
-
-    //     const heightDiff = char2.heightCompare(char1);
-    //     const heightMsg = char2.tallerThan(char1) ?
-    //         `${name2} is ${heightDiff} centimeters taller than ${name1}` :
-    //         `${name2} is ${heightDiff} centimeters shorter than ${name1}`;
-
-
-    //     const hairMsg = char2.hairColor === char1.hairColor ? 
-    //         `${name2} has the same hair color` :
-    //         "";
-    //     const genderMsg = char2.gender === char1.gender ?
-    //         `${name2} has the same gender` :
-    //         "";
-    //     document.getElementById("text-box").innerHTML += `
-    //         <p>${name2}'s weight: ${char2.mass}</p>
-    //         <p>${weightMsg}</p>
-    //         <p>${name2}'s height: ${char2.height}</p>
-    //         <p>${heightMsg}</p>
-    //         <p>${genderMsg}</p>
-    //         <p>${hairMsg}</p>
-    //     `;
-    // })
 })
 
 function toSnakeCase(name){

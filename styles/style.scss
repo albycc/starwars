@@ -1,8 +1,9 @@
 $yellow-tint:rgb(211, 194, 41);
-$cyan-tint: rgb(41, 211, 211);
+$cyan-tint: #14F4FE;
 $light-grey-tint:rgb(173, 173, 173);
 
 body{
+    color:$cyan-tint;
     background-color: rgb(23, 23, 43);
 }
 
@@ -28,8 +29,7 @@ body{
     border: 2px solid $yellow-tint;
 
     img{
-        height:400px;
-        width:150px;
+        height:300px;
     }
 }
 
