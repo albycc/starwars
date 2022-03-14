@@ -52,8 +52,8 @@ async function getCharacterNames(){
 // getCharacterNames();
 
 document.getElementById("fetch-characters").addEventListener("click", async ()=>{
-    const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".jpg";
-    const urlPicture2 = toSnakeCase(charTwoDropdown.options[charTwoDropdown.selectedIndex].value) + ".jpg";
+    const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".png";
+    const urlPicture2 = toSnakeCase(charTwoDropdown.options[charTwoDropdown.selectedIndex].value) + ".png";
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
