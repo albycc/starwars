@@ -1,9 +1,14 @@
+
+//variables
+
 $yellow-tint:rgb(211, 194, 41);
 $cyan-tint: #14F4FE;
 $cyan-tint-dark:#2ea2a8;
 $cyan-tint-light:#adfbff;
 $light-grey-tint:rgb(173, 173, 173);
 $background-colour:rgb(23, 23, 43);
+
+//mixins
 
 @mixin frame{
     border: 3px solid $cyan-tint;
@@ -36,6 +41,8 @@ body{
     font-family:Arial, Helvetica, sans-serif
 }
 
+//layout
+
 .header-logo{
     width:200px;
 }
@@ -58,14 +65,14 @@ body{
 .character-select-container{
     width:200px;
     color:$yellow-tint;
-    border: 2px solid $yellow-tint;
+    // border: 2px solid $yellow-tint;  //testing
     min-height: 100px;
 }
 
 .character-container{
     display: flex;
     flex-direction: row;
-    border: 2px solid $yellow-tint;
+    //border: 2px solid $yellow-tint;   //testing
 
 }
 
@@ -73,17 +80,20 @@ body{
     flex-direction: row-reverse;
 }
 
+// components
+
 .text-box{
     width:150px;
-    height:200px;
+    height:100px;
     overflow-wrap: break-word;
     @include frame;
 }
 
 .image-container{
     display:flex;
+    justify-content: center;
     img{
-        border:1px solid pink;
+        // border:1px solid pink;   //testing
         box-sizing: border-box;
         max-height:400px;
     }
@@ -95,9 +105,33 @@ body{
 
 .container-frame{
     @include frame;
+    width:150px;
+    h2{
+        margin:5px 0;
+    }
 }
 
 input.button-round{
     @include frame;
     @include inputComponent;
+}
+
+.question-container{
+    margin:10px 25px;
+}
+
+.question-button{
+    display:block;
+    border:none;
+    background-color: $background-colour;
+    color: $cyan-tint;
+    margin: 15px auto;
+    font-size: 1em;
+    cursor:pointer;
+    &:hover{
+        color:$cyan-tint-dark
+    }
+    &:active{
+        color:$cyan-tint-light;
+    }
 }
