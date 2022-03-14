@@ -8,29 +8,38 @@
     <title>Document</title>
 </head>
 <body>
-    <head>
 
-    </head>
-    <body>
-        <h1>Star Wars</h1>
-        <div>
+    <header>
+        <div class="flex-row center">
+            <div class="flex-column center">
+                <img class="header-logo" src="img/star-wars-logo.svg" alt="star wars logo">
+                <span class="header-text">Action Figure Display</span>
+            </div>
+
+        </div>
+    </header>
+    <main>
+        <div class="flex-column center">
+            <div class="flex-row">
+                <span class="info-text">Choose your favurite Star Wars actionfigure and compare them with real life data!</span>
+            </div>
             <div class="flex-row">
                 <div class="character-select-container">
-                    <select name="char1-dropdown" id="char1-dropdown"></select>
+                    <select name="char1-dropdown" id="char1-dropdown" class="character-dropdown"></select>
                 </div>
                 <div class="character-select-container">
-                    <select name="char2-dropdown" id="char2-dropdown"></select>
+                    <select name="char2-dropdown" id="char2-dropdown" class="character-dropdown"></select>
                 </div>
             </div>
             <div class="flex-row">
-                <input type="button" value="GET" id="fetch-characters">
+                <input type="button" value="GET DATA" id="fetch-characters" class="button-round">
             </div>
-            <div id="selected-character-container">
+            <div id="selected-character-container" class="center">
             </div>
 
         </div>
         
-    </body>
+    </main>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
