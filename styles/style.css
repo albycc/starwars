@@ -28,12 +28,15 @@ body {
 
 .character-container {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  margin: 5px 20px; }
 
 .flex-reverse {
   flex-direction: row-reverse; }
 
 .text-box {
+  position: relative;
+  top: 100px;
   width: 150px;
   height: 100px;
   overflow-wrap: break-word;
@@ -43,12 +46,26 @@ body {
   color: #14F4FE;
   padding: 10px 15px; }
 
+.header-text {
+  color: #d3c229;
+  margin: 5px 0; }
+
+.info-text {
+  margin: 50px 20px;
+  width: 400px;
+  overflow-wrap: break-word; }
+
 .image-container {
   display: flex;
-  justify-content: center; }
+  align-items: flex-end;
+  position: relative;
+  justify-content: center;
+  height: 500px; }
   .image-container img {
+    position: absolute;
+    bottom: 0px;
     box-sizing: border-box;
-    max-height: 400px; }
+    max-height: 500px; }
 
 .hidden {
   visibility: hidden; }
@@ -58,8 +75,7 @@ body {
   border-radius: 15px;
   background-color: #17172b;
   color: #14F4FE;
-  padding: 10px 15px;
-  width: 150px; }
+  padding: 10px 15px; }
   .container-frame h2 {
     margin: 5px 0; }
 

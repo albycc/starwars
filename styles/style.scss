@@ -76,6 +76,7 @@ body{
 .character-container{
     display: flex;
     flex-direction: row;
+    margin:5px 20px;
     //border: 2px solid $yellow-tint;   //testing
 
 }
@@ -87,19 +88,36 @@ body{
 // components
 
 .text-box{
+    position: relative;
+    top:100px;
     width:150px;
     height:100px;
     overflow-wrap: break-word;
     @include frame;
 }
 
+.header-text{
+    color: $yellow-tint;
+    margin:5px 0;
+}
+
+.info-text{
+    margin:50px 20px;
+    width:400px;
+    overflow-wrap: break-word;
+}
+
 .image-container{
-    display:flex;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
     justify-content: center;
+    height:500px;
     img{
-        // border:1px solid pink;   //testing
+        position: absolute;
+        bottom:0px;
         box-sizing: border-box;
-        max-height:400px;
+        max-height:500px;
     }
 }
 
@@ -109,7 +127,6 @@ body{
 
 .container-frame{
     @include frame;
-    width:150px;
     h2{
         margin:5px 0;
     }
