@@ -8,12 +8,21 @@
     <title>Document</title>
 </head>
 <body>
-    <head>
 
-    </head>
-    <body>
-        <h1>Star Wars</h1>
-        <div>
+    <header>
+        <div class="flex-row flex-center">
+            <div class="flex-column flex-center">
+                <img class="header-logo" src="img/star-wars-logo.svg" alt="star wars logo">
+                <span>Action Figure Display</span>
+            </div>
+
+        </div>
+    </header>
+    <main>
+        <div class="flex-column flex-center">
+            <div class="flex-row">
+                <span>Lorem ipsum</span>
+            </div>
             <div class="flex-row">
                 <div class="character-select-container">
                     <select name="char1-dropdown" id="char1-dropdown"></select>
@@ -23,14 +32,14 @@
                 </div>
             </div>
             <div class="flex-row">
-                <input type="button" value="GET" id="fetch-characters">
+                <input type="button" value="GET" id="fetch-characters" class="button-round">
             </div>
             <div id="selected-character-container">
             </div>
 
         </div>
         
-    </body>
+    </main>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

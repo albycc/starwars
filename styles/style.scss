@@ -1,10 +1,42 @@
 $yellow-tint:rgb(211, 194, 41);
 $cyan-tint: #14F4FE;
+$cyan-tint-dark:#2ea2a8;
+$cyan-tint-light:#adfbff;
 $light-grey-tint:rgb(173, 173, 173);
+$background-colour:rgb(23, 23, 43);
+
+@mixin frame{
+    border: 3px solid #14F4FE;
+    border-radius: 15px;
+    background-color: $background-colour;
+    color:$cyan-tint;
+    padding:10px 15px;
+}
+
+@mixin inputComponent{
+    cursor: pointer;
+    &:hover{
+        color:$cyan-tint-dark;
+        border-color: $cyan-tint-dark;
+    }
+    &:active{
+        color:$cyan-tint-light;
+        border-color: $cyan-tint-light;
+    }
+    &:disabled{
+        color:$light-grey-tint;
+        border-color: $light-grey-tint;
+    }
+}
 
 body{
-    color:$cyan-tint;
-    background-color: rgb(23, 23, 43);
+    color: $cyan-tint;
+    background-color: $background-colour;
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.header-logo{
+    width:200px;
 }
 
 .flex-row{
@@ -14,6 +46,12 @@ body{
 .flex-column{
     display:flex;
     flex-direction: column;
+}
+
+.flex-center{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 .character-select-container{
@@ -33,8 +71,17 @@ body{
     }
 }
 
-.text-box{
-    border: 1px solid $yellow-tint;
-    height:100px;
+.flex-reverse{
+    flex-direction: row-reverse;
 }
 
+.text-box{
+    border: 1px solid $yellow-tint;
+    width:150px;
+    overflow-wrap: break-word;
+}
+
+input.button-round{
+    @include frame;
+    @include inputComponent;
+}
