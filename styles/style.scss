@@ -6,7 +6,7 @@ $light-grey-tint:rgb(173, 173, 173);
 $background-colour:rgb(23, 23, 43);
 
 @mixin frame{
-    border: 3px solid #14F4FE;
+    border: 3px solid $cyan-tint;
     border-radius: 15px;
     background-color: $background-colour;
     color:$cyan-tint;
@@ -26,6 +26,7 @@ $background-colour:rgb(23, 23, 43);
     &:disabled{
         color:$light-grey-tint;
         border-color: $light-grey-tint;
+        cursor:inherit;
     }
 }
 
@@ -48,7 +49,7 @@ body{
     flex-direction: column;
 }
 
-.flex-center{
+.center{
     justify-content: center;
     text-align: center;
     align-items: center;
@@ -61,14 +62,11 @@ body{
     min-height: 100px;
 }
 
-.character-box{
+.character-container{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border: 2px solid $yellow-tint;
 
-    img{
-        height:300px;
-    }
 }
 
 .flex-reverse{
@@ -76,9 +74,27 @@ body{
 }
 
 .text-box{
-    border: 1px solid $yellow-tint;
     width:150px;
+    height:200px;
     overflow-wrap: break-word;
+    @include frame;
+}
+
+.image-container{
+    display:flex;
+    img{
+        border:1px solid pink;
+        box-sizing: border-box;
+        max-height:400px;
+    }
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.container-frame{
+    @include frame;
 }
 
 input.button-round{

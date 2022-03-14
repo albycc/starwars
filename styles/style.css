@@ -13,7 +13,7 @@ body {
   display: flex;
   flex-direction: column; }
 
-.flex-center {
+.center {
   justify-content: center;
   text-align: center;
   align-items: center; }
@@ -24,20 +24,40 @@ body {
   border: 2px solid #d3c229;
   min-height: 100px; }
 
-.character-box {
+.character-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   border: 2px solid #d3c229; }
-  .character-box img {
-    height: 300px; }
 
 .flex-reverse {
   flex-direction: row-reverse; }
 
 .text-box {
-  border: 1px solid #d3c229;
   width: 150px;
-  overflow-wrap: break-word; }
+  height: 200px;
+  overflow-wrap: break-word;
+  border: 3px solid #14F4FE;
+  border-radius: 15px;
+  background-color: #17172b;
+  color: #14F4FE;
+  padding: 10px 15px; }
+
+.image-container {
+  display: flex; }
+  .image-container img {
+    border: 1px solid pink;
+    box-sizing: border-box;
+    max-height: 400px; }
+
+.hidden {
+  visibility: hidden; }
+
+.container-frame {
+  border: 3px solid #14F4FE;
+  border-radius: 15px;
+  background-color: #17172b;
+  color: #14F4FE;
+  padding: 10px 15px; }
 
 input.button-round {
   border: 3px solid #14F4FE;
@@ -54,6 +74,7 @@ input.button-round {
     border-color: #adfbff; }
   input.button-round:disabled {
     color: #adadad;
-    border-color: #adadad; }
+    border-color: #adadad;
+    cursor: inherit; }
 
 /*# sourceMappingURL=style.css.map */

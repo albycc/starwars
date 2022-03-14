@@ -2,6 +2,7 @@ import { Character } from "../js/character.js";
 
 const charOneDropdown = document.getElementById("char1-dropdown");
 const charTwoDropdown = document.getElementById("char2-dropdown");
+const fetchButton = document.getElementById("fetch-characters");
 
 const selectedCharacterContainer = document.getElementById("selected-character-container");
 
@@ -41,17 +42,13 @@ async function fetchData(url){
     return json;
 }
 
-async function getCharacterNames(){
-    const starWarsList = await fetchData(apiURL);
-    starWarsList.results.forEach(char =>{
-        populateDropdown(charOneDropdown, char);
-        populateDropdown(charTwoDropdown, char);
-    })
-}
+fetchButton.addEventListener("click", async ()=>{
 
-// getCharacterNames();
+    fetchButton.disabled = true;
+    fetchButton.value = "WORKING..."
 
-document.getElementById("fetch-characters").addEventListener("click", async ()=>{
+    selectedCharacterContainer.innerHTML = "";
+
     const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".png";
     const urlPicture2 = toSnakeCase(charTwoDropdown.options[charTwoDropdown.selectedIndex].value) + ".png";
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
@@ -60,124 +57,138 @@ document.getElementById("fetch-characters").addEventListener("click", async ()=>
     char1 = new Character(char1Data.name, char1Data.gender, char1Data.height, char1Data.mass, char1Data.hair_color, urlPicture1);
     char2 = new Character(char2Data.name, char2Data.gender, char2Data.height, char2Data.mass, char2Data.hair_color, urlPicture2);
 
-    selectedCharacterContainer.innerHTML = "";
-
-    /*
-    <div selectedCharacterContainer
-        div charactersRow
-            characterContainer
-                div characterContainerGroup
-                    div textBox
-                        span messageText
-                     div characterProfileGrp
-                        img
-                        h2
-                div buttonGroup
-                    h2 questionsHeader
-                    input buttonAskWeight
-                    input buttonAskHeight
-                    input buttonAskHairColor
-                    input buttonAskGender
-
-    */
 
     // div with character containers
     const charactersRow = document.createElement("div");
     charactersRow.className = "flex-row";
-    let flipOrder = true;
+    let flipOrder = false;
 
     const characterContainer = (character, otherChar) =>{
         const characterContainer = document.createElement("div");
-        characterContainer.className = "character-box";
+        characterContainer.className = "character-container";
 
+        if(flipOrder){
+            characterContainer.classList.add("flex-reverse");
+        }
 
-            const characterContainerGroup = document.createElement("div");
-            characterContainerGroup.className = "flex-row";
-            if(flipOrder){
-                characterContainerGroup.classList.add("flex-reverse");
-            }
+        //textbox
+        const textBox = document.createElement("div");
+        textBox.classList.add("text-box");
+        textBox.classList.add("hidden");
+        const messageText = document.createElement("span");
 
-                const characterProfileGrp = document.createElement("div");
-                    const img = document.createElement("img");
-                    img.setAttribute("src", `../img/${character.pictureUrl}`);
-                    const charHeader = document.createElement("h2");
-                    charHeader.textContent = character.name;
+        const charDataColumn = document.createElement("div");
 
-                    characterProfileGrp.appendChild(img);
-                characterProfileGrp.appendChild(charHeader);
+        const characterProfileGrp = document.createElement("div");
+        const imageContainer = document.createElement("div");
+        imageContainer.classList.add("image-container")
+        const img = document.createElement("img");
+        img.setAttribute("src", `../img/${character.pictureUrl}`);
+        const charHeader = document.createElement("h2");
+        charHeader.textContent = character.name;
 
-                characterContainerGroup.appendChild(characterProfileGrp)
-
-                //  Textbox
-                const textBox = document.createElement("div");
-                textBox.className = "text-box";
-
-                    const messageText = document.createElement("span");
-                    textBox.appendChild(messageText);
-
-                characterContainerGroup.appendChild(textBox);
-            characterContainer.appendChild(characterContainerGroup)
+       
 
         flipOrder = !flipOrder;
         //  Questions group
         const buttonGroup = document.createElement("div");
-        buttonGroup.className = "flex-column";
+        buttonGroup.classList.add("flex-column");
+        buttonGroup.classList.add("container-frame");
 
-            const questionsHeader = document.createElement("h2");
-            questionsHeader.textContent = `Ask about ${otherChar.name}`
+        const questionsHeader = document.createElement("h2");
+        questionsHeader.innerText = `Ask about\n ${otherChar.name}`
 
-            const buttonAskWeight = document.createElement("input");
-            buttonAskWeight.setAttribute("type", "button");
-            buttonAskWeight.setAttribute("value", "Weight");
-            buttonAskWeight.addEventListener("click", ()=>{
-                const weightDiff = character.weightCompare(otherChar);
-                messageText.textContent = character.weightsMore(otherChar) ?
-                    `I weight ${weightDiff} kg more than ${otherChar.name}.` :
-                    `I weight ${weightDiff} kg less than ${otherChar.name}.`
-            });
+        const buttonAskWeight = document.createElement("input");
+        buttonAskWeight.setAttribute("type", "button");
+        buttonAskWeight.setAttribute("value", "Weight");
+        buttonAskWeight.addEventListener("click", ()=>{
+            textBox.classList.remove("hidden");
+            const weightDiff = character.weightCompare(otherChar);
+            messageText.textContent = character.weightsMore(otherChar) ?
+            `I weight ${weightDiff} kg more than ${otherChar.name}.` :
+            `I weight ${weightDiff} kg less than ${otherChar.name}.`
+        });
+        
+        const buttonAskHeight = document.createElement("input");
+        buttonAskHeight.setAttribute("type", "button");
+        buttonAskHeight.setAttribute("value", "Height");
+        buttonAskHeight.addEventListener("click", ()=>{
+            textBox.classList.remove("hidden");
+            const heightDiff = character.heightCompare(otherChar);
+            messageText.textContent = character.tallerThan(otherChar) ?
+            `I am ${heightDiff} cm taller than ${otherChar.name}.` :
+            `I am ${heightDiff} cm shorter than ${otherChar.name}.`;
+        });
+        
+        const buttonAskHairColor = document.createElement("input");
+        buttonAskHairColor.setAttribute("type", "button");
+        buttonAskHairColor.setAttribute("value", "Hair Color");
+        buttonAskHairColor.addEventListener("click", ()=>{
+            textBox.classList.remove("hidden");
+            messageText.textContent = character.isSameHairColor(otherChar) ?
+            `I share the same hair color as ${otherChar.name}.` :
+            `We do not have the same hair color.`;
+        })
+        
+        const buttonAskGender = document.createElement("input");
+        buttonAskGender.setAttribute("type", "button");
+        buttonAskGender.setAttribute("value", "Gender");
+        buttonAskGender.addEventListener("click", ()=>{
+            textBox.classList.remove("hidden");
+            messageText.textContent = character.isSameGender(otherChar) ?
+                `We are both ${character.gender}.` :
+                `We do not share the same gender.`
+        })
 
-            const buttonAskHeight = document.createElement("input");
-            buttonAskHeight.setAttribute("type", "button");
-            buttonAskHeight.setAttribute("value", "Height");
-            buttonAskHeight.addEventListener("click", ()=>{
-                const heightDiff = character.heightCompare(otherChar);
-                messageText.textContent = character.tallerThan(otherChar) ?
-                    `I am ${heightDiff} cm taller than ${otherChar.name}.` :
-                    `I am ${heightDiff} cm shorter than ${otherChar.name}.`;
-            });
+            /*
+        <div selectedCharacterContainer
+            div charactersRow
+                characterContainer
+                    div textBox
+                        span messageText
+                    div charDataColumn
+                        div characterProfileGrp
+                            div imgContainer
+                                img
+                            h2
+                        div buttonGroup
+                            h2 questionsHeader
+                            input buttonAskWeight
+                            input buttonAskHeight
+                            input buttonAskHairColor
+                            input buttonAskGender
+                characterContainer
 
-            const buttonAskHairColor = document.createElement("input");
-            buttonAskHairColor.setAttribute("type", "button");
-            buttonAskHairColor.setAttribute("value", "Hair Color");
-            buttonAskHairColor.addEventListener("click", ()=>{
-                messageText.textContent = character.isSameHairColor(otherChar) ?
-                    `I share the same hair color as ${otherChar.name}.` :
-                    `we do not have the same hair color.`;
-            })
-            
-            const buttonAskGender = document.createElement("input");
-            buttonAskGender.setAttribute("type", "button");
-            buttonAskGender.setAttribute("value", "Gender");
-            buttonAskGender.addEventListener("click", ()=>{
-                messageText.textContent = character.isSameGender(otherChar) ?
-                    `We are both ${character.gender}.` :
-                    `We do not share gender.`
-            })
+        */
 
-            buttonGroup.appendChild(questionsHeader);
-            buttonGroup.appendChild(buttonAskWeight);
-            buttonGroup.appendChild(buttonAskHeight);
-            buttonGroup.appendChild(buttonAskHairColor);
-            buttonGroup.appendChild(buttonAskGender);
-            characterContainer.appendChild(buttonGroup);
-        return characterContainer;
+       characterContainer.appendChild(textBox);
+            textBox.appendChild(messageText);
+
+       characterContainer.appendChild(charDataColumn);
+            charDataColumn.appendChild(characterProfileGrp);
+                characterProfileGrp.appendChild(imageContainer);
+                    imageContainer.appendChild(img);
+                characterProfileGrp.appendChild(charHeader)
+
+            charDataColumn.appendChild(buttonGroup);
+                buttonGroup.appendChild(questionsHeader);
+                buttonGroup.appendChild(buttonAskWeight);
+                buttonGroup.appendChild(buttonAskHeight);
+                buttonGroup.appendChild(buttonAskHairColor);
+                buttonGroup.appendChild(buttonAskGender);
+
+       return characterContainer;
     }
 
     charactersRow.appendChild(characterContainer(char1, char2));
     charactersRow.appendChild(characterContainer(char2, char1));
     selectedCharacterContainer.appendChild(charactersRow);
+
+    fetchButton.disabled = false;
+    fetchButton.value = "GET DATA"
 })
 
 function toSnakeCase(name){
     return name.toLowerCase().split(" ").join("_");
 }
+
