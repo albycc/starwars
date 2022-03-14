@@ -10,6 +10,10 @@ $background-colour:rgb(23, 23, 43);
 
 //mixins
 
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
 @mixin frame{
     border: 3px solid $cyan-tint;
     border-radius: 15px;
@@ -133,5 +137,23 @@ input.button-round{
     }
     &:active{
         color:$cyan-tint-light;
+    }
+}
+
+.character-dropdown{
+    position:relative;
+    @include frame;
+    cursor:pointer;
+    outline: none;
+    &:hover{
+        border-color: $cyan-tint-dark;
+    }
+    &:active{
+        border-color: $cyan-tint-light;
+    }
+    option{
+        &:hover{
+            background-color: #f32112;
+        }
     }
 }

@@ -1,3 +1,6 @@
+*, *::before, *::after {
+  box-sizing: border-box; }
+
 body {
   color: #14F4FE;
   background-color: #17172b;
@@ -93,5 +96,21 @@ input.button-round {
     color: #2ea2a8; }
   .question-button:active {
     color: #adfbff; }
+
+.character-dropdown {
+  position: relative;
+  border: 3px solid #14F4FE;
+  border-radius: 15px;
+  background-color: #17172b;
+  color: #14F4FE;
+  padding: 10px 15px;
+  cursor: pointer;
+  outline: none; }
+  .character-dropdown:hover {
+    border-color: #2ea2a8; }
+  .character-dropdown:active {
+    border-color: #adfbff; }
+  .character-dropdown option:hover {
+    background-color: #f32112; }
 
 /*# sourceMappingURL=style.css.map */
