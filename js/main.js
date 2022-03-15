@@ -37,9 +37,13 @@ function populateDropdown(dropdown, item){
 })();
 
 async function fetchData(url){
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
+    try{
+        const response = await axios.get(url);
+        return response.data;
+    }
+    catch(error){
+        alert("error: " + error);
+    }
 }
 
 fetchButton.addEventListener("click", async ()=>{
@@ -52,8 +56,7 @@ fetchButton.addEventListener("click", async ()=>{
         return;
     }
 
-    fetchButton.disabled = true;
-    fetchButton.value = "WORKING..."
+    setFetchbutton(true,"WORKING...");
 
     selectedCharacterContainer.innerHTML = "";
 
@@ -212,11 +215,14 @@ fetchButton.addEventListener("click", async ()=>{
     charactersRow.appendChild(characterContainer(char2, char1));
     selectedCharacterContainer.appendChild(charactersRow);
 
-    fetchButton.disabled = false;
-    fetchButton.value = "GET DATA"
+    setFetchbutton(false,"GET DATA");
 })
 
 function toSnakeCase(name){
     return name.toLowerCase().split(" ").join("_");
 }
 
+function setFetchbutton(bool, text){
+    fetchButton.disabled = bool;
+    fetchButton.value = text;
+}
