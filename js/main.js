@@ -37,13 +37,18 @@ function populateDropdown(dropdown, item){
 })();
 
 async function fetchData(url){
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
+    try{
+        const response = await axios.get(url);
+        return response.data;
+    }
+    catch(error){
+        alert("error: " + error);
+    }
 }
 
 fetchButton.addEventListener("click", async ()=>{
 
+<<<<<<< HEAD
     const dropdownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
     const dropdownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
     if(dropdownName1 == dropdownName2){
@@ -60,6 +65,22 @@ fetchButton.addEventListener("click", async ()=>{
 
     const urlPicture1 = toSnakeCase("./" + dropdownName1 + ".png");
     const urlPicture2 = toSnakeCase("./" + dropdownName2 + ".png");
+=======
+    const dropDownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
+    const dropDownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
+
+    if(dropDownName1 === dropDownName2){
+        alert("Choose different characters.");
+        return;
+    }
+
+    setFetchbutton(true,"WORKING...");
+
+    selectedCharacterContainer.innerHTML = "";
+
+    const urlPicture1 = toSnakeCase("./" + dropDownName1) + ".png";
+    const urlPicture2 = toSnakeCase("./" + dropDownName2) + ".png";
+>>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
@@ -81,10 +102,12 @@ fetchButton.addEventListener("click", async ()=>{
         }
 
         //textbox
+        const textBoxPos = document.createElement("div");
         const textBox = document.createElement("div");
         textBox.classList.add("text-box");
         textBox.classList.add("hidden");
         const messageText = document.createElement("span");
+        character.setTextMessage(messageText);
 
         character.setTextMessage(messageText);
 
@@ -109,7 +132,7 @@ fetchButton.addEventListener("click", async ()=>{
         questionGrp.classList.add("container-frame");
 
         const questionsHeader = document.createElement("h3");
-        questionsHeader.innerText = `Ask about\n ${otherChar.name}`;
+        questionsHeader.innerText = `Ask about\n ${otherChar.name}'s`;
 
         //buttonGroup
         const buttonGroup = document.createElement("div");
@@ -121,6 +144,7 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskWeight.classList.add("question-button");
         buttonAskWeight.addEventListener("click", ()=>{
             const weightDiff = character.weightCompare(otherChar);
+<<<<<<< HEAD
             let text = `I weight ${otherChar.mass} kg and weight `;
             console.log(`character: ${character.name}   mass: ` + character.mass);
             console.log(`otherChar: ${otherChar.name}   mass: ` + otherChar.mass);
@@ -134,6 +158,12 @@ fetchButton.addEventListener("click", async ()=>{
             // text += otherChar.weightsMore(character) ?
             // `${weightDiff} kg more than ${character.name}.` :
             // `${weightDiff} kg less than ${character.name}.`;
+=======
+            let text = `I weight ${otherChar.mass} kg and is `;
+            text += otherChar.weightsMore(character) ?
+            `${weightDiff} kg heavier than ${character.name}.` :
+            `${weightDiff} kg lighter than ${character.name}.`
+>>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         });
         
@@ -155,6 +185,7 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHairColor.setAttribute("value", "Hair Color");
         buttonAskHairColor.classList.add("question-button");
         buttonAskHairColor.addEventListener("click", ()=>{
+<<<<<<< HEAD
             let color = otherChar.hairColor;
             if(color === "n/a" || color === "none"){
                 color = "no"
@@ -163,6 +194,13 @@ fetchButton.addEventListener("click", async ()=>{
             if(character.hairColor === otherChar.hairColor){
                 text += `I share the same hair color as ${character.name}.`;
             }
+=======
+            let text = otherChar.hairColor == "n/a" || otherChar.hairColor == "none" ? "I have no hair" : `I have ${otherChar.hairColor} hair color`;
+            if(character.isSameHairColor(otherChar)){
+                text += ` and have the same hair color as ${character.name}`;
+            }
+            text += ".";
+>>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         })
         
@@ -171,6 +209,7 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskGender.setAttribute("value", "Gender");
         buttonAskGender.classList.add("question-button");
         buttonAskGender.addEventListener("click", ()=>{
+<<<<<<< HEAD
             let text = `I am a ${otherChar.gender}.`;
             if(otherChar.gender === "n/a"){
                 text = "I have no gender";
@@ -178,6 +217,13 @@ fetchButton.addEventListener("click", async ()=>{
             if(character.gender === otherChar.gender){
                 text += ` I share the same gender as ${character.name}`;
             }
+=======
+            let text = otherChar.gender == "n/a" ? "I have no gender" : `I am a ${otherChar.gender}`;
+            if(character.isSameGender(otherChar)){
+                text += ` and so is ${character.name}`;
+            }
+            text += ".";
+>>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         })
 
@@ -185,8 +231,9 @@ fetchButton.addEventListener("click", async ()=>{
         <div selectedCharacterContainer
             div charactersRow
                 characterContainer
-                    div textBox
-                        span messageText
+                    div textBoxPos
+                        div textBox
+                            span messageText
                     div charDataColumn
                         div characterProfileGrp
                             div imgContainer
@@ -201,10 +248,11 @@ fetchButton.addEventListener("click", async ()=>{
                                 input buttonAskGender
         */
 
-       characterContainer.appendChild(textBox);
-            textBox.appendChild(messageText);
+        characterContainer.appendChild(textBoxPos);
+            textBoxPos.appendChild(textBox);
+                textBox.appendChild(messageText);
 
-       characterContainer.appendChild(charDataColumn);
+        characterContainer.appendChild(charDataColumn);
             charDataColumn.appendChild(characterProfileGrp);
                 characterProfileGrp.appendChild(imageContainer);
                     imageContainer.appendChild(img);
@@ -218,17 +266,24 @@ fetchButton.addEventListener("click", async ()=>{
                     buttonGroup.appendChild(buttonAskHairColor);
                     buttonGroup.appendChild(buttonAskGender);
 
-       return characterContainer;
+        return characterContainer;
     }
 
     charactersRow.appendChild(characterContainer(char1, char2));
     charactersRow.appendChild(characterContainer(char2, char1));
     selectedCharacterContainer.appendChild(charactersRow);
 
-    fetchButton.disabled = false;
-    fetchButton.value = "GET DATA"
+    setFetchbutton(false,"GET DATA");
 })
 
 function toSnakeCase(name){
     return name.toLowerCase().split(" ").join("_");
 }
+<<<<<<< HEAD
+=======
+
+function setFetchbutton(bool, text){
+    fetchButton.disabled = bool;
+    fetchButton.value = text;
+}
+>>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
