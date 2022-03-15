@@ -44,13 +44,21 @@ async function fetchData(url){
 
 fetchButton.addEventListener("click", async ()=>{
 
+    const dropDownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
+    const dropDownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
+
+    if(dropDownName1 === dropDownName2){
+        alert("Choose different characters.");
+        return;
+    }
+
     fetchButton.disabled = true;
     fetchButton.value = "WORKING..."
 
     selectedCharacterContainer.innerHTML = "";
 
-    const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".png";
-    const urlPicture2 = toSnakeCase(charTwoDropdown.options[charTwoDropdown.selectedIndex].value) + ".png";
+    const urlPicture1 = toSnakeCase("./" + dropDownName1) + ".png";
+    const urlPicture2 = toSnakeCase("./" + dropDownName2) + ".png";
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
@@ -72,10 +80,12 @@ fetchButton.addEventListener("click", async ()=>{
         }
 
         //textbox
+        const textBoxPos = document.createElement("div");
         const textBox = document.createElement("div");
         textBox.classList.add("text-box");
         textBox.classList.add("hidden");
         const messageText = document.createElement("span");
+        character.setTextMessage(messageText);
 
         // charDataColumn
         const charDataColumn = document.createElement("div");
@@ -98,7 +108,7 @@ fetchButton.addEventListener("click", async ()=>{
         questionGrp.classList.add("container-frame");
 
         const questionsHeader = document.createElement("h3");
-        questionsHeader.innerText = `Ask about\n ${otherChar.name}`;
+        questionsHeader.innerText = `Ask about\n ${otherChar.name}'s`;
 
         //buttonGroup
         const buttonGroup = document.createElement("div");
@@ -109,11 +119,12 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskWeight.setAttribute("value", "Weight");
         buttonAskWeight.classList.add("question-button");
         buttonAskWeight.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
             const weightDiff = character.weightCompare(otherChar);
-            messageText.textContent = character.weightsMore(otherChar) ?
-            `I weight ${weightDiff} kg more than ${otherChar.name}.` :
-            `I weight ${weightDiff} kg less than ${otherChar.name}.`
+            let text = `I weight ${otherChar.mass} kg and is `;
+            text += otherChar.weightsMore(character) ?
+            `${weightDiff} kg heavier than ${character.name}.` :
+            `${weightDiff} kg lighter than ${character.name}.`
+            otherChar.message(text);
         });
         
         const buttonAskHeight = document.createElement("input");
@@ -121,11 +132,12 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHeight.setAttribute("value", "Height");
         buttonAskHeight.classList.add("question-button");
         buttonAskHeight.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
             const heightDiff = character.heightCompare(otherChar);
-            messageText.textContent = character.tallerThan(otherChar) ?
-            `I am ${heightDiff} cm taller than ${otherChar.name}.` :
-            `I am ${heightDiff} cm shorter than ${otherChar.name}.`;
+            let text = `I am ${otherChar.height} cm long and is `;
+            text += otherChar.tallerThan(character) ?
+            `${heightDiff} cm taller than ${character.name}.` :
+            `${heightDiff} cm shorter than ${character.name}.`;
+            otherChar.message(text);
         });
         
         const buttonAskHairColor = document.createElement("input");
@@ -133,10 +145,12 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHairColor.setAttribute("value", "Hair Color");
         buttonAskHairColor.classList.add("question-button");
         buttonAskHairColor.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
-            messageText.textContent = character.isSameHairColor(otherChar) ?
-            `I share the same hair color as ${otherChar.name}.` :
-            `We do not have the same hair color.`;
+            let text = otherChar.hairColor == "n/a" || otherChar.hairColor == "none" ? "I have no hair" : `I have ${otherChar.hairColor} hair color`;
+            if(character.isSameHairColor(otherChar)){
+                text += ` and have the same hair color as ${character.name}`;
+            }
+            text += ".";
+            otherChar.message(text);
         })
         
         const buttonAskGender = document.createElement("input");
@@ -144,18 +158,21 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskGender.setAttribute("value", "Gender");
         buttonAskGender.classList.add("question-button");
         buttonAskGender.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
-            messageText.textContent = character.isSameGender(otherChar) ?
-                `We are both ${character.gender}.` :
-                `We do not share the same gender.`
+            let text = otherChar.gender == "n/a" ? "I have no gender" : `I am a ${otherChar.gender}`;
+            if(character.isSameGender(otherChar)){
+                text += ` and so is ${character.name}`;
+            }
+            text += ".";
+            otherChar.message(text);
         })
 
         /*
         <div selectedCharacterContainer
             div charactersRow
                 characterContainer
-                    div textBox
-                        span messageText
+                    div textBoxPos
+                        div textBox
+                            span messageText
                     div charDataColumn
                         div characterProfileGrp
                             div imgContainer
@@ -170,10 +187,11 @@ fetchButton.addEventListener("click", async ()=>{
                                 input buttonAskGender
         */
 
-       characterContainer.appendChild(textBox);
-            textBox.appendChild(messageText);
+        characterContainer.appendChild(textBoxPos);
+            textBoxPos.appendChild(textBox);
+                textBox.appendChild(messageText);
 
-       characterContainer.appendChild(charDataColumn);
+        characterContainer.appendChild(charDataColumn);
             charDataColumn.appendChild(characterProfileGrp);
                 characterProfileGrp.appendChild(imageContainer);
                     imageContainer.appendChild(img);
@@ -187,7 +205,7 @@ fetchButton.addEventListener("click", async ()=>{
                     buttonGroup.appendChild(buttonAskHairColor);
                     buttonGroup.appendChild(buttonAskGender);
 
-       return characterContainer;
+        return characterContainer;
     }
 
     charactersRow.appendChild(characterContainer(char1, char2));

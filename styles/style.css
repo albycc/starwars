@@ -38,13 +38,13 @@ body {
   position: relative;
   top: 100px;
   width: 150px;
-  height: 100px;
   overflow-wrap: break-word;
   border: 3px solid #14F4FE;
   border-radius: 15px;
   background-color: #17172b;
   color: #14F4FE;
-  padding: 10px 15px; }
+  padding: 10px 15px;
+  z-index: 1; }
 
 .header-text {
   color: #d3c229;
