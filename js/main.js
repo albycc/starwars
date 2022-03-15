@@ -60,8 +60,8 @@ fetchButton.addEventListener("click", async ()=>{
 
     selectedCharacterContainer.innerHTML = "";
 
-    const urlPicture1 = toSnakeCase("../img/" + dropDownName1) + ".png";
-    const urlPicture2 = toSnakeCase("../img/" + dropDownName2) + ".png";
+    const urlPicture1 = toSnakeCase(dropDownName1) + ".png";
+    const urlPicture2 = toSnakeCase(dropDownName2) + ".png";
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
@@ -103,6 +103,7 @@ fetchButton.addEventListener("click", async ()=>{
         imageContainer.classList.add("image-container")
         const img = document.createElement("img");
         img.setAttribute("src", `../img/${character.pictureUrl}`);
+        img.setAttribute("alt", character.name)
         const charHeader = document.createElement("h2");
         charHeader.textContent = character.name;
 
