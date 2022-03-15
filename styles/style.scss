@@ -91,9 +91,9 @@ body{
     position: relative;
     top:100px;
     width:150px;
-    height:100px;
     overflow-wrap: break-word;
     @include frame;
+    z-index: 1;
 }
 
 .header-text{
