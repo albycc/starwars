@@ -48,24 +48,6 @@ async function fetchData(url){
 
 fetchButton.addEventListener("click", async ()=>{
 
-<<<<<<< HEAD
-    const dropdownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
-    const dropdownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
-    if(dropdownName1 == dropdownName2){
-        alert("Can't be the same character");
-        return;
-    }
-
-    fetchButton.disabled = true;
-    fetchButton.value = "WORKING..."
-
-    selectedCharacterContainer.innerHTML = "";
-
-    // dropdown.options[dropdown.selectedIndex];
-
-    const urlPicture1 = toSnakeCase("./" + dropdownName1 + ".png");
-    const urlPicture2 = toSnakeCase("./" + dropdownName2 + ".png");
-=======
     const dropDownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
     const dropDownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
 
@@ -80,7 +62,6 @@ fetchButton.addEventListener("click", async ()=>{
 
     const urlPicture1 = toSnakeCase("./" + dropDownName1) + ".png";
     const urlPicture2 = toSnakeCase("./" + dropDownName2) + ".png";
->>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
@@ -144,26 +125,10 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskWeight.classList.add("question-button");
         buttonAskWeight.addEventListener("click", ()=>{
             const weightDiff = character.weightCompare(otherChar);
-<<<<<<< HEAD
-            let text = `I weight ${otherChar.mass} kg and weight `;
-            console.log(`character: ${character.name}   mass: ` + character.mass);
-            console.log(`otherChar: ${otherChar.name}   mass: ` + otherChar.mass);
-            console.log(`${otherChar.name} weights more: ` + otherChar.weightsMore(character));
-            if(otherChar.weightsMore(character)){
-                text += `${weightDiff} kg more than ${character.name}.`;
-            }
-            else{
-                text += `${weightDiff} kg less than ${character.name}.`;
-            }
-            // text += otherChar.weightsMore(character) ?
-            // `${weightDiff} kg more than ${character.name}.` :
-            // `${weightDiff} kg less than ${character.name}.`;
-=======
             let text = `I weight ${otherChar.mass} kg and is `;
             text += otherChar.weightsMore(character) ?
             `${weightDiff} kg heavier than ${character.name}.` :
             `${weightDiff} kg lighter than ${character.name}.`
->>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         });
         
@@ -185,22 +150,11 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHairColor.setAttribute("value", "Hair Color");
         buttonAskHairColor.classList.add("question-button");
         buttonAskHairColor.addEventListener("click", ()=>{
-<<<<<<< HEAD
-            let color = otherChar.hairColor;
-            if(color === "n/a" || color === "none"){
-                color = "no"
-            }
-            let text = `I have ${color} hair color. `;
-            if(character.hairColor === otherChar.hairColor){
-                text += `I share the same hair color as ${character.name}.`;
-            }
-=======
             let text = otherChar.hairColor == "n/a" || otherChar.hairColor == "none" ? "I have no hair" : `I have ${otherChar.hairColor} hair color`;
             if(character.isSameHairColor(otherChar)){
                 text += ` and have the same hair color as ${character.name}`;
             }
             text += ".";
->>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         })
         
@@ -209,21 +163,11 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskGender.setAttribute("value", "Gender");
         buttonAskGender.classList.add("question-button");
         buttonAskGender.addEventListener("click", ()=>{
-<<<<<<< HEAD
-            let text = `I am a ${otherChar.gender}.`;
-            if(otherChar.gender === "n/a"){
-                text = "I have no gender";
-            }
-            if(character.gender === otherChar.gender){
-                text += ` I share the same gender as ${character.name}`;
-            }
-=======
             let text = otherChar.gender == "n/a" ? "I have no gender" : `I am a ${otherChar.gender}`;
             if(character.isSameGender(otherChar)){
                 text += ` and so is ${character.name}`;
             }
             text += ".";
->>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94
             otherChar.message(text);
         })
 
@@ -279,11 +223,8 @@ fetchButton.addEventListener("click", async ()=>{
 function toSnakeCase(name){
     return name.toLowerCase().split(" ").join("_");
 }
-<<<<<<< HEAD
-=======
 
 function setFetchbutton(bool, text){
     fetchButton.disabled = bool;
     fetchButton.value = text;
 }
->>>>>>> a3422f1c3e979f5aca1d0910d968af6ac2a78b94

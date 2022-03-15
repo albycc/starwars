@@ -1,42 +1,10 @@
-
-//variables
-
-$yellow-tint:rgb(211, 194, 41);
-$cyan-tint: #14F4FE;
-$cyan-tint-dark:#2ea2a8;
-$cyan-tint-light:#adfbff;
-$light-grey-tint:rgb(173, 173, 173);
-$background-colour:rgb(23, 23, 43);
+@import "./partials/variables.scss";
+@import "./components.scss";
 
 //mixins
 
 *, *::before, *::after{
     box-sizing: border-box;
-}
-
-@mixin frame{
-    border: 3px solid $cyan-tint;
-    border-radius: 15px;
-    background-color: $background-colour;
-    color:$cyan-tint;
-    padding:10px 15px;
-}
-
-@mixin inputComponent{
-    cursor: pointer;
-    &:hover{
-        color:$cyan-tint-dark;
-        border-color: $cyan-tint-dark;
-    }
-    &:active{
-        color:$cyan-tint-light;
-        border-color: $cyan-tint-light;
-    }
-    &:disabled{
-        color:$light-grey-tint;
-        border-color: $light-grey-tint;
-        cursor:inherit;
-    }
 }
 
 body{
@@ -85,92 +53,3 @@ body{
     flex-direction: row-reverse;
 }
 
-// components
-
-.text-box{
-    position: relative;
-    top:100px;
-    width:150px;
-    overflow-wrap: break-word;
-    @include frame;
-    z-index: 1;
-}
-
-.header-text{
-    color: $yellow-tint;
-    margin:5px 0;
-}
-
-.info-text{
-    margin:50px 20px;
-    width:400px;
-    overflow-wrap: break-word;
-}
-
-.image-container{
-    display: flex;
-    align-items: flex-end;
-    position: relative;
-    justify-content: center;
-    height:500px;
-    img{
-        position: absolute;
-        bottom:0px;
-        box-sizing: border-box;
-        max-height:500px;
-    }
-}
-
-.hidden{
-    visibility: hidden;
-}
-
-.container-frame{
-    @include frame;
-    h2{
-        margin:5px 0;
-    }
-}
-
-input.button-round{
-    @include frame;
-    @include inputComponent;
-}
-
-.question-container{
-    margin:10px 25px;
-}
-
-.question-button{
-    display:block;
-    border:none;
-    background-color: $background-colour;
-    color: $cyan-tint;
-    margin: 15px auto;
-    font-size: 1em;
-    cursor:pointer;
-    &:hover{
-        color:$cyan-tint-dark
-    }
-    &:active{
-        color:$cyan-tint-light;
-    }
-}
-
-.character-dropdown{
-    position:relative;
-    @include frame;
-    cursor:pointer;
-    outline: none;
-    &:hover{
-        border-color: $cyan-tint-dark;
-    }
-    &:active{
-        border-color: $cyan-tint-light;
-    }
-    option{
-        &:hover{
-            background-color: #f32112;
-        }
-    }
-}

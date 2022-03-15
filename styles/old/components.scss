@@ -1,7 +1,0 @@
-@mixin frame{
-    border: 3px solid #14F4FE;
-}
-
-input.button-round{
-    @include frame;
-}
