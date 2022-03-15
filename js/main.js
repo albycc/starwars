@@ -151,7 +151,7 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHairColor.classList.add("question-button");
         buttonAskHairColor.addEventListener("click", ()=>{
             let text = otherChar.hairColor == "n/a" || otherChar.hairColor == "none" ? "I have no hair" : `I have ${otherChar.hairColor} hair color`;
-            if(character.isSameHairColor(otherChar)){
+            if(character.isSameHairColor(otherChar) && otherChar.hairColor !=="none" && otherChar.hairColor !=="n/a"){
                 text += ` and have the same hair color as ${character.name}`;
             }
             text += ".";
@@ -163,8 +163,8 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskGender.setAttribute("value", "Gender");
         buttonAskGender.classList.add("question-button");
         buttonAskGender.addEventListener("click", ()=>{
-            let text = otherChar.gender == "n/a" ? "I have no gender" : `I am a ${otherChar.gender}`;
-            if(character.isSameGender(otherChar)){
+            let text = otherChar.gender == "n/a" ? "I have no gender" : `I am ${otherChar.gender}`;
+            if(character.isSameGender(otherChar) && otherChar.gender !== "n/a"){
                 text += ` and so is ${character.name}`;
             }
             text += ".";
