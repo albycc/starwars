@@ -6,6 +6,7 @@ export class Character{
         this.mass = mass;
         this.hairColor = hairColor;
         this.pictureUrl = pictureUrl;
+        this.textMessage;
     }
 
     weightsMore(otherChar){
@@ -30,5 +31,16 @@ export class Character{
 
     isSameGender(otherChar){
         return this.gender === otherChar.gender;
+    }
+
+    setTextMessage(_textMessage){
+        this.textMessage = _textMessage;
+    }
+
+    message(text){
+        if(this.textMessage.parentElement.classList.contains("hidden")){
+            this.textMessage.parentElement.classList.remove("hidden");
+        }
+        this.textMessage.textContent = text;
     }
 }

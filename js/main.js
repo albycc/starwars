@@ -44,13 +44,22 @@ async function fetchData(url){
 
 fetchButton.addEventListener("click", async ()=>{
 
+    const dropdownName1 = charOneDropdown.options[charOneDropdown.selectedIndex].value;
+    const dropdownName2 = charTwoDropdown.options[charTwoDropdown.selectedIndex].value;
+    if(dropdownName1 == dropdownName2){
+        alert("Can't be the same character");
+        return;
+    }
+
     fetchButton.disabled = true;
     fetchButton.value = "WORKING..."
 
     selectedCharacterContainer.innerHTML = "";
 
-    const urlPicture1 = toSnakeCase(charOneDropdown.options[charOneDropdown.selectedIndex].value) + ".png";
-    const urlPicture2 = toSnakeCase(charTwoDropdown.options[charTwoDropdown.selectedIndex].value) + ".png";
+    // dropdown.options[dropdown.selectedIndex];
+
+    const urlPicture1 = toSnakeCase("./" + dropdownName1 + ".png");
+    const urlPicture2 = toSnakeCase("./" + dropdownName2 + ".png");
     const char1Data = await fetchData(`${apiURL}/${(charOneDropdown.selectedIndex + 1)}`);
     const char2Data = await fetchData(`${apiURL}/${(charTwoDropdown.selectedIndex + 1)}`);
 
@@ -76,6 +85,8 @@ fetchButton.addEventListener("click", async ()=>{
         textBox.classList.add("text-box");
         textBox.classList.add("hidden");
         const messageText = document.createElement("span");
+
+        character.setTextMessage(messageText);
 
         // charDataColumn
         const charDataColumn = document.createElement("div");
@@ -109,11 +120,21 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskWeight.setAttribute("value", "Weight");
         buttonAskWeight.classList.add("question-button");
         buttonAskWeight.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
             const weightDiff = character.weightCompare(otherChar);
-            messageText.textContent = character.weightsMore(otherChar) ?
-            `I weight ${weightDiff} kg more than ${otherChar.name}.` :
-            `I weight ${weightDiff} kg less than ${otherChar.name}.`
+            let text = `I weight ${otherChar.mass} kg and weight `;
+            console.log(`character: ${character.name}   mass: ` + character.mass);
+            console.log(`otherChar: ${otherChar.name}   mass: ` + otherChar.mass);
+            console.log(`${otherChar.name} weights more: ` + otherChar.weightsMore(character));
+            if(otherChar.weightsMore(character)){
+                text += `${weightDiff} kg more than ${character.name}.`;
+            }
+            else{
+                text += `${weightDiff} kg less than ${character.name}.`;
+            }
+            // text += otherChar.weightsMore(character) ?
+            // `${weightDiff} kg more than ${character.name}.` :
+            // `${weightDiff} kg less than ${character.name}.`;
+            otherChar.message(text);
         });
         
         const buttonAskHeight = document.createElement("input");
@@ -121,11 +142,12 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHeight.setAttribute("value", "Height");
         buttonAskHeight.classList.add("question-button");
         buttonAskHeight.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
             const heightDiff = character.heightCompare(otherChar);
-            messageText.textContent = character.tallerThan(otherChar) ?
-            `I am ${heightDiff} cm taller than ${otherChar.name}.` :
-            `I am ${heightDiff} cm shorter than ${otherChar.name}.`;
+            let text = `I am ${otherChar.height} cm long and is `;
+            text += otherChar.tallerThan(character) ?
+            `${heightDiff} cm taller than ${character.name}.` :
+            `${heightDiff} cm shorter than ${character.name}.`;
+            otherChar.message(text);
         });
         
         const buttonAskHairColor = document.createElement("input");
@@ -133,10 +155,15 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskHairColor.setAttribute("value", "Hair Color");
         buttonAskHairColor.classList.add("question-button");
         buttonAskHairColor.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
-            messageText.textContent = character.isSameHairColor(otherChar) ?
-            `I share the same hair color as ${otherChar.name}.` :
-            `We do not have the same hair color.`;
+            let color = otherChar.hairColor;
+            if(color === "n/a" || color === "none"){
+                color = "no"
+            }
+            let text = `I have ${color} hair color. `;
+            if(character.hairColor === otherChar.hairColor){
+                text += `I share the same hair color as ${character.name}.`;
+            }
+            otherChar.message(text);
         })
         
         const buttonAskGender = document.createElement("input");
@@ -144,10 +171,14 @@ fetchButton.addEventListener("click", async ()=>{
         buttonAskGender.setAttribute("value", "Gender");
         buttonAskGender.classList.add("question-button");
         buttonAskGender.addEventListener("click", ()=>{
-            textBox.classList.remove("hidden");
-            messageText.textContent = character.isSameGender(otherChar) ?
-                `We are both ${character.gender}.` :
-                `We do not share the same gender.`
+            let text = `I am a ${otherChar.gender}.`;
+            if(otherChar.gender === "n/a"){
+                text = "I have no gender";
+            }
+            if(character.gender === otherChar.gender){
+                text += ` I share the same gender as ${character.name}`;
+            }
+            otherChar.message(text);
         })
 
         /*
@@ -201,4 +232,3 @@ fetchButton.addEventListener("click", async ()=>{
 function toSnakeCase(name){
     return name.toLowerCase().split(" ").join("_");
 }
-
